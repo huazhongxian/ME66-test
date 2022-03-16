@@ -66,20 +66,17 @@ namespace ME66 {
       let obj = JSON.parse(a);
       //basic.showNumber(1)
       //basic.showString(obj.Price)
-      let cmd ;
+      let cmd =42 ;
 
-      if(obj.hasOwnProperty("Price")){
+      if (obj.SKU != undefined) {
         if (btnEvt) {
-               btnEvt(obj.SKU, obj.Name_PY, obj.Price)
+          btnEvt(obj.SKU, obj.Name_PY, obj.Price)
         }
-        cmd = 42;
       }
-
-      if(obj.hasOwnProperty("ID")){
+      if (obj.ID != undefined){
         if (peopleEvt) {
           peopleEvt(obj.ID, obj.user)
         }
-        cmd = 43;
       }
 
       control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 0x8900 + cmd)
