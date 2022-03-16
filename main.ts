@@ -95,9 +95,9 @@ namespace ME66 {
    * @param tx Tx pin; eg: SerialPin.P1
    * @param rx Rx pin; eg: SerialPin.P2
    */
-  //% blockId=newland_init block="Newland init|Tx pin %tx|Rx pin %rx"
+  //% blockId=me66_init block="init|Tx pin %tx|Rx pin %rx"
   //% group="Basic" weight=100
-  export function newland_init(tx: SerialPin, rx: SerialPin): void {
+  export function me66_init(tx: SerialPin, rx: SerialPin): void {
     serial.redirect(tx, rx, BaudRate.BaudRate115200)
     serial.readString()
     serial.setRxBufferSize(128)
