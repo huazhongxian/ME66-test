@@ -13,6 +13,10 @@ namespace ME66 {
 
   let btnEvt: Evtxye = null
 
+  type Evtxy = (x: string, y: string) => void
+
+  let peopleEvt: Evtxy = null
+
   export enum SerialPorts {
     PORT1 = 0,
     PORT2 = 1,
@@ -58,13 +62,26 @@ namespace ME66 {
 
     } else {
       // let b = '{"SKU":1002,"Name_CN":"瓜子","Name_PY":"guazi","Price":10.00}';
+     // let a = '{"ID":"2001","user":"zhangsan"}';
       let obj = JSON.parse(a);
       //basic.showNumber(1)
-      //   basic.showString(obj.Price)
-      if (btnEvt) {
-             btnEvt(obj.SKU, obj.Name_PY, obj.Price) // btna btnb
+      //basic.showString(obj.Price)
+      let cmd ;
+
+      if(obj.hasOwnProperty("Price")){
+        if (btnEvt) {
+               btnEvt(obj.SKU, obj.Name_PY, obj.Price)
+        }
+        cmd = 42;
       }
-      let cmd = 42;
+
+      if(obj.hasOwnProperty("ID")){
+        if (peopleEvt) {
+          peopleEvt(obj.ID, obj.user)
+        }
+        cmd = 43;
+      }
+
       control.raiseEvent(EventBusSource.MES_BROADCAST_GENERAL_ID, 0x8900 + cmd)
     }
 
@@ -132,13 +149,23 @@ namespace ME66 {
     basic.pause(100)
   }
 
-  //% blockId=newland_scan_items block="on Button"
+  //% blockId=newland_scan_items block="scan items"
   //% weight=96
   //% group="Basic" draggableParameters=reporter
   export function newland_scan_items(
       handler: (SKU: string, Name: string, Price: string) => void
   ): void {
     btnEvt = handler
+  }
+
+
+  //% blockId=newland_scan_people block="scan people"
+  //% weight=96
+  //% group="Basic" draggableParameters=reporter
+  export function newland_scan_people(
+      handler: (ID: string, name: string) => void
+  ): void {
+    peopleEvt = handler
   }
 
 }
